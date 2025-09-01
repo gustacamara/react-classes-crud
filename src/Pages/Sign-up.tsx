@@ -1,15 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@radix-ui/react-label";
+import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom";
 
 interface SignInForm {
-  username: String
-  cpf: String
-  email: String
-  password: String
-  confPassword: String
+  username: string
+  cpf: string
+  email: string
+  idade: number
+  password: string
+  confPassword: string
 }
 
 export function SignUp() {
@@ -21,21 +22,20 @@ export function SignUp() {
   } = useForm<SignInForm>()
 
   const onSubmitSignUp = (data: SignInForm) => {
-    if(data.username.length < 8) {
+    if (data.username.length < 8) {
       alert("voce precisa ter um nome maior que 8 letras!")
       return
     }
-    if(data.cpf.length != 11) {
+    if (data.cpf.length != 11) {
       alert("cpf invalido")
       return
     }
-    if(data.confPassword != data.password) {
+    if (data.confPassword != data.password) {
       alert("Senhas nao coincidem")
       return
     }
     navegate(`../sign-in?email=${data.email}`)
   }
-
 
   return (
     <>
@@ -50,7 +50,11 @@ export function SignUp() {
               Criar sua conta
             </h1>
             <p className="text-muted-foreground text-sm">
-              Comece a utilizar nosso site já!
+              Comece a utilizar o site do{' '}
+              <strong>
+                Gusta
+              </strong>
+              !
             </p>
           </div>
 
@@ -65,7 +69,7 @@ export function SignUp() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="cpf">cpf</Label>
+              <Label htmlFor="cpf">Cpf</Label>
               <Input
                 id="cpf"
                 type="text"
@@ -79,6 +83,15 @@ export function SignUp() {
                 id="email"
                 type="email"
                 {...register('email')}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="idade">Idade</Label>
+              <Input
+                id="idade"
+                type="number"
+                {...register('idade')}
               />
             </div>
 
@@ -104,15 +117,11 @@ export function SignUp() {
               finalizar cadastro
             </Button>
             <p className="text-muted-foreground px-6 text-center text-sm leading-relaxed">
-              Ao continuar, você concorda com nossos
+              Ao continuar, você concorda em dar
               <a className="underline underline-offset-4" href="">
                 {' '}
-                termos de serviço{' '}
-              </a>
-              e
-              <a className="underline underline-offset-4" href="">
+                nota máxima para esse trabalho
                 {' '}
-                políticas de privacidade
               </a>
             </p>
           </form>

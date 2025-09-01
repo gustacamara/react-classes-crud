@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@radix-ui/react-label"
+import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 
@@ -21,7 +21,7 @@ export function SignIn() {
   })
 
   const submitSignInForm = (data: SignInForm) => {
-    navegate("/")
+    navegate("/", {state: data})
   }
 
   return (
