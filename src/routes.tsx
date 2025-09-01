@@ -7,14 +7,22 @@ import { UserData } from "./Pages/UserData"
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <UserData />,
+    element: <UserData
+      isManager={true}
+      id={1}
+      username="exampleUser"
+      cpf="123.456.789-00"
+      email="user@example.com"
+      age={30}
+      password="examplePassword"
+    />,
   },
   {
     path: "/",
-    element: <AuthLayout/>,
+    element: <AuthLayout />,
     children: [
-      {path: "/sign-up", element: <SignUp/>},
-      {path: "/sign-in", element: <SignIn/>}
+      { path: "/sign-up", element: <SignUp /> },
+      { path: "/sign-in", element: <SignIn /> }
     ]
   }
 ])
