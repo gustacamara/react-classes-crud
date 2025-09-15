@@ -3,8 +3,7 @@ import { DialogContent, DialogDescription, DialogTitle } from "@/components/ui/d
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
-import type { UserInformation } from "./UserDataList"
-import { deleteUser, updateUser } from "@/api/user"
+import { deleteUser, updateUser, type UserBody } from "@/api/user"
 
 type EditUserDetails = {
   id: number
@@ -16,7 +15,7 @@ type EditUserDetails = {
   newPassword: string
 }
 
-export function UpdateUser(props: UserInformation) {
+export function UpdateUser(props: UserBody) {
   const {
     register,
     handleSubmit,
@@ -32,7 +31,8 @@ export function UpdateUser(props: UserInformation) {
       id: data.id,
       username: data.username,
       email: data.email,
-      password: data.newPassword ? data.newPassword : data.password,
+      password: data.password,
+      newPassword: data.newPassword ?? null,
       age: data.age
     }
     await updateUser(updatedData)

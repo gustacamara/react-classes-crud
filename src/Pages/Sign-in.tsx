@@ -1,4 +1,4 @@
-import { authenticateUser, registerUser } from "@/api/user"
+import { authenticateUser } from "@/api/user"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
