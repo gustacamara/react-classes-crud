@@ -211,7 +211,7 @@ O sistema adiciona automaticamente o token JWT nas requisições. Certifique-se 
 
 ## Autor
 
-Desenvolvido como projeto educacional - Creative Experience PUCPR
+Desenvolvido como projeto educacional - Experiencia criativa PUCPR
 
 ---
 
