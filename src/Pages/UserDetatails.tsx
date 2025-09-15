@@ -3,7 +3,7 @@ import { DialogContent, DialogDescription, DialogTitle } from "@/components/ui/d
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
-import type { UserInformation } from "./UserData"
+import type { UserInformation } from "./UserDataList"
 import { deleteUser, updateUser } from "@/api/user"
 
 type EditUserDetails = {
@@ -24,7 +24,7 @@ export function UpdateUser(props: UserInformation) {
   } = useForm<EditUserDetails>()
 
   const updateUserInformation = async (data: EditUserDetails) => {
-    if(!data.password){
+    if (!data.password) {
       alert("Coloque a senha para atualizar as informações!")
       return;
     }
