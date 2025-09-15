@@ -4,22 +4,46 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import type { UserInformation } from "./UserData"
+import { deleteUser, updateUser } from "@/api/user"
 
+type EditUserDetails = {
+  id: number
+  username: string
+  cpf: string
+  email: string
+  age: number
+  password: string
+  newPassword: string
+}
 
 export function UpdateUser(props: UserInformation) {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting }
-  } = useForm<UserInformation>()
+  } = useForm<EditUserDetails>()
 
-  const updateUserInformation = (data: UserInformation) => {
-    console.log(data)
+  const updateUserInformation = async (data: EditUserDetails) => {
+    if(!data.password){
+      alert("Coloque a senha para atualizar as informações!")
+      return;
+    }
+    const updatedData = {
+      id: data.id,
+      username: data.username,
+      email: data.email,
+      password: data.newPassword ? data.newPassword : data.password,
+      age: data.age
+    }
+    await updateUser(updatedData)
+    window.location.reload()
   }
 
-  const deleteUser = (data: UserInformation) => {
-    console.log(data)
+  const removeUserAccount = async (data: EditUserDetails) => {
+    await deleteUser(data.id)
+    window.location.reload()
   }
+
 
   return (
     <>
@@ -83,8 +107,15 @@ export function UpdateUser(props: UserInformation) {
             <Input
               id="password"
               type="password"
-              defaultValue={props.password}
               {...register('password')}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Nova senha</Label>
+            <Input
+              id="newPassword"
+              type="password"
+              {...register('newPassword')}
             />
           </div>
 
@@ -94,7 +125,7 @@ export function UpdateUser(props: UserInformation) {
               variant="destructive"
               className="py-2 rounded transition flex-1"
               disabled={isSubmitting}
-              onClick={handleSubmit(deleteUser)}
+              onClick={handleSubmit(removeUserAccount)}
             >
               Deletar
             </Button>
