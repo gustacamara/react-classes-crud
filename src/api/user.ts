@@ -42,12 +42,17 @@ export async function authenticateUser(data: AuthenticateUserBody): Promise<User
     return null
   }
 }
-
-type DeleteUserBody = {
-  cpf: string
-  email: string
-  username: string
+export async function deleteUser(id: number) {
+  await api.delete(`/user/${id}`)
 }
-export async function deleteUser(data: DeleteUserBody) {
-  await api.post("/deleteUser", data)
+
+type UpdateUserBody = {
+  id: number
+  username: string
+  email: string
+  password: string
+  age: number
+}
+export async function updateUser(data:UpdateUserBody) {
+  await api.put('/updateUser', data)
 }
