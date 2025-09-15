@@ -1,0 +1,15 @@
+services:
+  database:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_USER: docker
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: docker
+    ports:
+      - "3306:3306"
+    volumes:
+      - classes_exercises:/var/lib/mysql
+volumes:
+  classes_exercises:
