@@ -26,11 +26,22 @@ export function SignIn() {
   }
 
   const submitSignInForm = async (data: SignInForm) => {
-    const result = await authUser(data)
-    if (!result) {
-      alert("E-mail ou senha incorretos.")
-    } else {
+    try {
+      const result = await authUser(data)
+      console.log(result)
+
+      if (!result || result.success !== true) {
+        alert(result?.message ?? "E-mail ou senha incorretos.")
+        return
+      }
+
+      localStorage.setItem("token", result.token)
+      localStorage.setItem("user", JSON.stringify(result.user))
+
       navegate("/")
+    } catch (error) {
+      console.error(error)
+      alert("Erro ao conectar com o servidor.")
     }
   }
 

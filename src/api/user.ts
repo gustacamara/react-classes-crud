@@ -1,7 +1,6 @@
 import { api } from "@/lib/axios";
-import type { promises } from "dns";
 
-type UserBody = {
+export type UserBody = {
   id: number
   username: string
   cpf: string
@@ -26,7 +25,7 @@ type RegisterUserBody = {
   age: number
   password: string
 }
-export async function registerUser(data:RegisterUserBody) {
+export async function registerUser(data: RegisterUserBody) {
   await api.post("/auth/signup", data)
 }
 
@@ -34,9 +33,15 @@ type AuthenticateUserBody = {
   email: string
   password: string
 }
-export async function authenticateUser(data: AuthenticateUserBody): Promise<UserBody | null> {
-  try{
-    const result = await api.post("/auth/signin", data)
+type AuthenticateUserPromise = {
+  success:boolean
+  message:string
+  user: UserBody
+  token: string
+}
+export async function authenticateUser(data: AuthenticateUserBody): Promise<AuthenticateUserPromise | null> {
+  try {
+    const result = await api.post<AuthenticateUserPromise>("/auth/signin", data)
     return result.data
   } catch {
     return null
@@ -53,6 +58,6 @@ type UpdateUserBody = {
   password: string
   age: number
 }
-export async function updateUser(data:UpdateUserBody) {
+export async function updateUser(data: UpdateUserBody) {
   await api.put('/updateUser', data)
 }

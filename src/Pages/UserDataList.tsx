@@ -1,28 +1,36 @@
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Pencil } from "lucide-react";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { Dialog } from "@/components/ui/dialog";
 import { UpdateUser } from "./UserDetatails";
 import { useEffect, useState } from "react";
-import { getUsers } from "@/api/user";
+import { getUsers, type UserBody } from "@/api/user";
 
-export interface UserInformation {
-  id: number
-  username: string
-  cpf: string
-  email: string
-  age: number
-  password: string
-  isManager: boolean
-}
-export function UserData(prop: UserInformation) {
+export function UserData() {
 
-  const [users, setUsers] = useState<UserInformation>()
+  const navigate = useNavigate();
+  const [loadedUser, setLoadedUser] = useState< null | UserBody>()
+  const [users, setUsers] = useState<UserBody | UserBody[]>()
+
   async function loadUsers() {
+    const token = localStorage.getItem('token')
+    const userString = localStorage.getItem('user')
+    const user = userString ? JSON.parse(userString) as UserBody : null
+    setLoadedUser(user)
+
+    
+    if (!token) {
+      navigate("/sign-in")
+      return
+    }
+
     const result = await getUsers()
-    if (!result) return
+    if (!result) {
+      navigate("/sign-in")
+      return
+    }
     setUsers(result)
   }
   useEffect(() => {
@@ -32,7 +40,7 @@ export function UserData(prop: UserInformation) {
     <>
       <div className="flex m-10 gap-2 flex-col">
         <div className="flex justify-between">
-          {prop.isManager ? (
+          {loadedUser?.isManager ? (
             <h1 className="text-3xl mb-1.5">Lista de usuários</h1>
           ) : (
             <h1 className="text-3xl mb-1.5">Suas informações</h1>
@@ -57,8 +65,8 @@ export function UserData(prop: UserInformation) {
             </TableHeader>
 
             <TableBody>
-              {prop.isManager && Array.isArray(users)
-                ? users.map((user: UserInformation) => (
+              {loadedUser?.isManager && Array.isArray(users)
+                ? users.map((user: UserBody) => (
                   <TableRow key={user.id}>
                     <TableCell>
                       <Dialog>
@@ -88,11 +96,11 @@ export function UserData(prop: UserInformation) {
                 : (
                   <TableRow>
                     <TableCell></TableCell>
-                    <TableCell>{prop.id}</TableCell>
-                    <TableCell>{prop.username}</TableCell>
-                    <TableCell>{prop.email}</TableCell>
-                    <TableCell>{prop.age}</TableCell>
-                    <TableCell>{prop.cpf}</TableCell>
+                    <TableCell>{loadedUser?.id}</TableCell>
+                    <TableCell>{loadedUser?.username}</TableCell>
+                    <TableCell>{loadedUser?.email}</TableCell>
+                    <TableCell>{loadedUser?.age}</TableCell>
+                    <TableCell>{loadedUser?.cpf}</TableCell>
                   </TableRow>
                 )
               }
