@@ -1,14 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { registerUser } from "@/api/user"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"
 
 interface SignInForm {
   username: string
   cpf: string
   email: string
-  idade: number
+  age: number
   password: string
   confPassword: string
 }
@@ -21,7 +22,8 @@ export function SignUp() {
     formState: { isSubmitting }
   } = useForm<SignInForm>()
 
-  const onSubmitSignUp = (data: SignInForm) => {
+
+  const onSubmitSignUp = async (data: SignInForm) => {
     if (data.username.length < 8) {
       alert("voce precisa ter um nome maior que 8 letras!")
       return
@@ -34,6 +36,7 @@ export function SignUp() {
       alert("Senhas nao coincidem")
       return
     }
+    await registerUser(data)
     navegate(`../sign-in?email=${data.email}`)
   }
 
@@ -60,7 +63,7 @@ export function SignUp() {
 
           <form className="space-y-4" onSubmit={handleSubmit(onSubmitSignUp)}>
             <div className="space-y-2">
-              <Label htmlFor="username">Nome de usuário</Label>
+              <Label htmlFor="username">Username</Label>
               <Input
                 id="username"
                 type="text"
@@ -87,11 +90,11 @@ export function SignUp() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="idade">Idade</Label>
+              <Label htmlFor="age">Idade</Label>
               <Input
-                id="idade"
+                id="age"
                 type="number"
-                {...register('idade')}
+                {...register('age')}
               />
             </div>
 
