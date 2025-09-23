@@ -1,6 +1,20 @@
 # React Classes CRUD
 
 Um sistema completo de gerenciamento de usuários construído com React, TypeScript e Vite. O projeto implementa funcionalidades de autenticação, CRUD de usuários e interface moderna com componentes reutilizáveis.
+<div align="center">
+
+![Signin](https://github.com/user-attachments/assets/78f6cd5d-6856-4592-a903-da0a51ac76fe)
+<br/><br/>
+
+![Signup](https://github.com/user-attachments/assets/bd10927e-579c-4501-ba4b-aa3f9c355a62)
+<br/><br/>
+
+![Home](https://github.com/user-attachments/assets/ef0b58d4-b0dd-4d40-8dcc-b5e65e8fd144)
+<br/><br/>
+
+![UserDetails](https://github.com/user-attachments/assets/2c2046c3-b450-4be6-b46a-17563c616916)
+
+</div>
 
 ## Tecnologias Utilizadas
 
